@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'tad-deploy'
+    subscriptionId: '186581ee-c6d0-4799-9d32-fe813a6c0a0a'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'tad-test'
+    location: 'UK South'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/jeremyfox36/tad-repo/main/create_web_app/azuredeploy.json'
+    overrideParameters: '-projectName tad-test'
+    deploymentMode: 'Incremental'
+    deploymentName: 'td-test-deploy1'
